@@ -19,6 +19,103 @@ Ud. debe implementar una clase de PRUEBA (Clase de ejecución) desde la cual se 
 *y que además se pueda mostrar el balance (estado de cuenta) para cada cliente.
  * @author Luis Bermeo
  */
+import java.util.ArrayList;
+
 public class Problema_6_SistemaBanco {
+    public static void main(String[] args) {
+        Ahorro cuenta1 = new Ahorro("Luis Bermeo", "123456789", 600.0);
+        Platino cuenta2 = new Platino("Miguel Escaleras", "246897531", 1500.0);
+        Cheque cuenta3 = new Cheque("Christopher Grefa", "987654321", 4000.0);
+        
+        ArrayList<Cuenta> clientes = new ArrayList<>();
+        clientes.add(cuenta1);
+        clientes.add(cuenta2);
+        clientes.add(cuenta3);
+  
+        Banco banco = new Banco("Banco de Loja", clientes);
+        
+        for(Cuenta cliente: clientes){
+            System.out.println(cliente + "\n");
+        }
+            
+    }
+    
+}
+
+
+class Banco{
+    public String nombreBanco;
+    public ArrayList<Cuenta> clientes;
+
+    public Banco(String nombreBanco, ArrayList<Cuenta> cuentas) {
+        this.nombreBanco = nombreBanco;
+        this.clientes = new ArrayList<>();
+    }
+     
+}
+
+class Cuenta{
+    public String nombreCliente;
+    public String numCuenta;
+    public double balanceActual;
+
+    public Cuenta(String nombreCliente, String numCuenta, double balanceActual) {
+        this.nombreCliente = nombreCliente;
+        this.numCuenta = numCuenta;
+        this.balanceActual = balanceActual;
+    }
+    
+
+    public String getNumCuenta() {
+        return numCuenta;
+    }
+
+    public double getBalanceActual() {
+        return balanceActual;
+    }
+    
+    public void depositar(double deposito){
+        this.balanceActual += deposito;
+    }
+    
+    public void retirar(double retiro){
+        this.balanceActual = this.balanceActual - retiro;
+    }
+    
+    public double obtenerBalanceActual(){
+        return this.getBalanceActual();
+    }
+    
+}
+
+class Cheque extends Cuenta{
+
+    public Cheque(String nombreCliente, String numCuenta, double balanceActual) {
+        super(nombreCliente, numCuenta, balanceActual);
+    }
+
+}
+
+class Platino extends Cuenta{
+
+    public Platino(String nombreCliente, String numCuenta, double balanceActual) {
+        super(nombreCliente, numCuenta, balanceActual);
+    }
+
+    public void calcularInteres(){
+        this.balanceActual += this.balanceActual * 0.10;
+    }
+    
+}
+
+class Ahorro extends Cuenta{
+
+    public Ahorro(String nombreCliente, String numCuenta, double balanceActual) {
+        super(nombreCliente, numCuenta, balanceActual);
+    }
+    
+    public void calcularInteres(){
+        this.balanceActual += this.balanceActual * 0.05;
+    }
     
 }
