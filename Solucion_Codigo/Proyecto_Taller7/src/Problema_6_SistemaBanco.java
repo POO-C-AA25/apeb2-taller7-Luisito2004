@@ -24,7 +24,9 @@ import java.util.ArrayList;
 public class Problema_6_SistemaBanco {
     public static void main(String[] args) {
         Ahorro cuenta1 = new Ahorro("Luis Bermeo", "123456789", 600.0);
+        cuenta1.calcularInteres();
         Platino cuenta2 = new Platino("Miguel Escaleras", "246897531", 1500.0);
+        cuenta2.calcularInteres();
         Cheque cuenta3 = new Cheque("Christopher Grefa", "987654321", 4000.0);
         
         ArrayList<Cuenta> clientes = new ArrayList<>();
@@ -34,8 +36,10 @@ public class Problema_6_SistemaBanco {
   
         Banco banco = new Banco("Banco de Loja", clientes);
         
+        System.out.println(banco.getNombreBanco() + "\n");
         for(Cuenta cliente: clientes){
-            System.out.println(cliente + "\n");
+            System.out.println("Nombre del Cliente: " + cliente.getNombreCliente());
+            System.out.println("Balance Actual: " + cliente.getBalanceActual()+ "\n");
         }
             
     }
@@ -44,34 +48,53 @@ public class Problema_6_SistemaBanco {
 
 
 class Banco{
-    public String nombreBanco;
-    public ArrayList<Cuenta> clientes;
+    private String nombreBanco;
+    private ArrayList<Cuenta> clientes;
 
     public Banco(String nombreBanco, ArrayList<Cuenta> cuentas) {
         this.nombreBanco = nombreBanco;
-        this.clientes = new ArrayList<>();
+        this.clientes = cuentas;
     }
-     
+
+    public String getNombreBanco() {
+        return nombreBanco;
+    }
+
 }
 
 class Cuenta{
-    public String nombreCliente;
-    public String numCuenta;
-    public double balanceActual;
+    private String nombreCliente;
+    private String numCuenta;
+    private double balanceActual;
 
     public Cuenta(String nombreCliente, String numCuenta, double balanceActual) {
         this.nombreCliente = nombreCliente;
         this.numCuenta = numCuenta;
         this.balanceActual = balanceActual;
     }
-    
+
+    public String getNombreCliente() {
+        return nombreCliente;
+    }
+
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
+    }
 
     public String getNumCuenta() {
         return numCuenta;
     }
 
+    public void setNumCuenta(String numCuenta) {
+        this.numCuenta = numCuenta;
+    }
+
     public double getBalanceActual() {
         return balanceActual;
+    }
+
+    public void setBalanceActual(double balanceActual) {
+        this.balanceActual = balanceActual;
     }
     
     public void depositar(double deposito){
@@ -80,10 +103,6 @@ class Cuenta{
     
     public void retirar(double retiro){
         this.balanceActual = this.balanceActual - retiro;
-    }
-    
-    public double obtenerBalanceActual(){
-        return this.getBalanceActual();
     }
     
 }
@@ -103,7 +122,7 @@ class Platino extends Cuenta{
     }
 
     public void calcularInteres(){
-        this.balanceActual += this.balanceActual * 0.10;
+        this.setBalanceActual(this.getBalanceActual() + (this.getBalanceActual() * 0.10));
     }
     
 }
@@ -115,7 +134,7 @@ class Ahorro extends Cuenta{
     }
     
     public void calcularInteres(){
-        this.balanceActual += this.balanceActual * 0.05;
+        this.setBalanceActual(this.getBalanceActual() + (this.getBalanceActual() * 0.05));
     }
     
 }

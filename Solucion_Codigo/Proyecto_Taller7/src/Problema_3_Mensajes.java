@@ -15,8 +15,8 @@ Para probar el diseño jerarquico de clases, instancia en el clase de prueba Eje
  */
 public class Problema_3_Mensajes {
     public static void main(String[] args) {
-        Celular num1 = new Celular("0994758901", "Luis");
-        Celular num2 = new Celular("0983568986", "Maria");
+        NumTelefono num1 = new NumTelefono("0994758901", "Luis");
+        NumTelefono num2 = new NumTelefono("0983568986", "Maria");
 
         SMS sms1 = new SMS(num1, num2, "Hola, Como estas?");
         MMS mms1 = new MMS(num1, num2, "Imagen.png");
@@ -29,27 +29,35 @@ public class Problema_3_Mensajes {
 }
 
 class Mensaje {
-    public Celular remitente;
-    public Celular destinatario;
+    private NumTelefono remitente;
+    private NumTelefono destinatario;
 
-    public Mensaje(Celular remitente, Celular destinatario) {
+    public Mensaje(NumTelefono remitente, NumTelefono destinatario) {
         this.remitente = remitente;
         this.destinatario = destinatario;
     }
 
     public String enviarMensaje() {
-        return "Mensaje enviado de " + remitente.numero + " a " + destinatario.numero;
+        return "Mensaje enviado de " + remitente.getNumero() + " a " + destinatario.getNumero();
     }
 
     public String visualizarMensaje() {
-        return "Mensaje genérico";
+        return "Mensaje generico";
+    }
+
+    public NumTelefono getRemitente() {
+        return remitente;
+    }
+
+    public NumTelefono getDestinatario() {
+        return destinatario;
     }
 }
 
 class SMS extends Mensaje {
-    public String contenido;
+    private String contenido;
 
-    public SMS(Celular remitente, Celular destinatario, String contenido) {
+    public SMS(NumTelefono remitente, NumTelefono destinatario, String contenido) {
         super(remitente, destinatario);
         this.contenido = contenido;
     }
@@ -61,14 +69,14 @@ class SMS extends Mensaje {
 
     @Override
     public String toString() {
-        return "SMS de " + remitente.nombre + " a " + destinatario.nombre + ": " + contenido;
+        return "SMS de " + getRemitente().getNombre() + " a " + getDestinatario().getNombre() + ": " + contenido;
     }
 }
 
 class MMS extends Mensaje {
-    public String nombreImagen;
+    private String nombreImagen;
 
-    public MMS(Celular remitente, Celular destinatario, String nombreImagen) {
+    public MMS(NumTelefono remitente, NumTelefono destinatario, String nombreImagen) {
         super(remitente, destinatario);
         this.nombreImagen = nombreImagen;
     }
@@ -80,17 +88,26 @@ class MMS extends Mensaje {
 
     @Override
     public String toString() {
-        return "MMS de " + remitente.nombre + " a " + destinatario.nombre + ": " + nombreImagen;
+        return "MMS de " + getRemitente().getNombre() + " a " + getDestinatario().getNombre() + ": " + nombreImagen;
     }
 }
 
-class Celular {
-    public String numero;
-    public String nombre;
+class NumTelefono {
+    private String numero;
+    private String nombre;
 
-    public Celular(String numero, String nombre) {
+    public NumTelefono(String numero, String nombre) {
         this.numero = numero;
         this.nombre = nombre;
     }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
 }
+
 
