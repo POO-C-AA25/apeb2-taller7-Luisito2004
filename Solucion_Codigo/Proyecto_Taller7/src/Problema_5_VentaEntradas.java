@@ -41,7 +41,7 @@ El vendedor elige la opción “consulta entrada” e introduce el identificador
 La aplicación muestra los datos de la entrada: nombre del espectador, precio y nombre de la zona. Si no existe ninguna entrada con ese identificador, lo notifica y finaliza el caso de uso
  * @author Luis Bermeo
  */
-public class Problema_5_VentaEntradas{
+public class Problema_5_VentaEntradas {
     public static void main(String[] args) {
         Zona zonaPrincipal = new Zona("Principal", 200, 25.0, 17.5);
         Zona zonaPalcoB = new Zona("PalcoB", 40, 70.0, 40.0);
@@ -64,11 +64,11 @@ public class Problema_5_VentaEntradas{
 }
 
 class Zona {
-    public String nombre;
-    public int numLocalidades;
-    public double precioNormal;
-    public double precioAbonado;
-    public int entradasVendidas;
+    private String nombre;
+    private int numLocalidades;
+    private double precioNormal;
+    private double precioAbonado;
+    private int entradasVendidas;
 
     public Zona(String nombre, int numLocalidades, double precioNormal, double precioAbonado) {
         this.nombre = nombre;
@@ -100,10 +100,10 @@ class Zona {
 }
 
 class Entrada {
-    public int id;
-    public Zona zona;
-    public String nombreComprador;
-    public double precio;
+    private int id;
+    private Zona zona;
+    private String nombreComprador;
+    private double precio;
 
     public Entrada(int id, Zona zona, String nombreComprador, double precio) {
         this.id = id;
@@ -114,6 +114,18 @@ class Entrada {
 
     public int getId() {
         return id;
+    }
+
+    public Zona getZona() {
+        return zona;
+    }
+
+    public String getNombreComprador() {
+        return nombreComprador;
+    }
+
+    public double getPrecio() {
+        return precio;
     }
 
     public String toString() {
@@ -143,12 +155,8 @@ class EntradaAbonado extends Entrada {
 }
 
 class Vendedor {
-    public Entrada[] entradasVendidas = new Entrada[10];
-    public int contadorEntradas = 0;
-
-    public Vendedor() {
-    }
-    
+    private Entrada[] entradasVendidas = new Entrada[10];
+    private int contadorEntradas = 0;
 
     public Entrada venderEntrada(String zonaNombre, String nombreComprador, String tipoEntrada, Zona zona) {
         if (!zona.getNombre().equalsIgnoreCase(zonaNombre)) {
@@ -176,11 +184,11 @@ class Vendedor {
                 entrada = new EntradaAbonado(contadorEntradas, zona, nombreComprador);
                 break;
             default:
-                System.out.println("Tipo de entrada inválido.");
+                System.out.println("Tipo de entrada invalido.");
                 return null;
         }
         entradasVendidas[contadorEntradas - 1] = entrada;
-        System.out.println("Venta exitosa. ID entrada: " + contadorEntradas + ", Precio: $" + entrada.precio);
+        System.out.println("Venta exitosa. ID entrada: " + contadorEntradas + ", Precio: $" + entrada.getPrecio());
         return entrada;
     }
 
@@ -192,5 +200,6 @@ class Vendedor {
         return entradasVendidas[id - 1];
     }
 }
+
 
 
